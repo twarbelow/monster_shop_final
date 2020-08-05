@@ -11,7 +11,7 @@
       <p>Quantity: <%= cart.count_of(item.id) %></p>
       <% if cart.qualifies_for_discount?(item.id) %>
         <p><%= cart.discount(item.id) %>% Discount Applied</p>
-        <p>Savings: <%= number_to_currency(cart.savings(item)) %></p>
+        <p>Savings: <%= number_to_currency(cart.savings(item.id)) %></p>
         <p>Subtotal: <%= number_to_currency(cart.discounted_subtotal(item.id)) %></p>
         <% else %>
         <p>No Discount Applied</p>
