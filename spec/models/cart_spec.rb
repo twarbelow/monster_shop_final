@@ -8,6 +8,8 @@ RSpec.describe Cart do
       @ogre = @megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
       @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 2 )
       @hippo = @brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
+      @discount_1 = @megan.discounts.create!(percent: 5, quantity_required: 1)
+      @discount_2 = @megan.discounts.create!(percent: 10, quantity_required: 2)
       @cart = Cart.new({
         @ogre.id.to_s => 1,
         @giant.id.to_s => 2
@@ -62,6 +64,30 @@ RSpec.describe Cart do
       @cart.less_item(@giant.id.to_s)
 
       expect(@cart.count_of(@giant.id)).to eq(1)
+    end
+
+    it ".discount_percent()" do
+      expect(@cart.discount_percent(@giant.id)).to eq(10)
+
+      @cart.less_item(@giant.id.to_s)
+
+      expect(@cart.discount_percent(@giant.id)).to eq(5)
+    end
+
+    it "savings()" do
+      expect(@cart.savings(@giant.id)).to eq(10.0)
+    end
+
+    it "discounted_subtotal()" do
+      expect(@cart.discounted_subtotal(@giant.id)).to eq(90.0)
+    end
+
+    it "discount_info()" do
+      expect(@cart.discount_info(@giant.id)).to eq([@discount_1, @discount_2])
+
+      @cart.less_item(@giant.id.to_s)
+
+      expect(@cart.discount_info(@giant.id)).to eq([@discount_1])
     end
   end
 end
