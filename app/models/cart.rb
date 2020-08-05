@@ -62,7 +62,7 @@ class Cart
   end
 
   def discounted_subtotal(item_id)
-    # calculate discounted subtotal based on original subtotal minus savings
+    subtotal_of(item_id) - savings(item_id)
   end
 
   def discount_info(item_id)
