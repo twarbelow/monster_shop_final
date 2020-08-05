@@ -43,20 +43,26 @@ class Cart
   def limit_reached?(item_id)
     count_of(item_id) == Item.find(item_id).inventory
   end
-
+  # need to model spec for these!
   def qualifies_for_discount?(item_id)
-    # check if the item has enough quantity to meet any of the merchant's discounts
+    quantity = count_of(item_id)
+    item = Item.find(item_id)
+    discount_info(item, quantity).any?
   end
 
-  def discount(item_id)
+  def discount_percent(item_id)
     # return the correct percentage discount for the item based on qualifying quantity
   end
 
   def savings(item_id)
-    # calculate number amount of savings based on item quantity and the discount it qualified for
+    # calculate number amount of savings based on count_of item and the discount it qualified for
   end
 
   def discounted_subtotal(item_id)
     # calculate discounted subtotal based on original subtotal minus savings
+  end
+
+  def discount_info(item, quantity)
+    Discount.where('merchant_id = ? and quantity_required <= ?', item.merchant_id, quantity)
   end
 end
