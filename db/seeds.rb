@@ -15,3 +15,4 @@ brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image
 m_user = megan.users.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword', role: 1)
 merchant_1.discounts.create!(percent: 5, quantity_required: 10)
 merchant_1.discounts.create!(percent: 10, quantity_required: 15)
+reg_user = User.create!(name: 'Regular', address: '123 Regular St', city: 'Regular', state: 'RE', zip: 12355, email: 'regular@example.com', password: 'regularpassword', role: 0)
