@@ -54,6 +54,34 @@ RSpec.describe 'Order Show Page' do
       end
     end
 
+    it "I see the final discounted price of discounted items on my order" do
+      discount_1 = @megan.discounts.create!(percent: 5, quantity_required: 2)
+      order_3 = @user.orders.create!(status: "packaged")
+      order_item_4 = order_3.order_items.create!(item: @ogre, price: 50, quantity: 2, fulfilled: true)
+      order_item_5 = order_3.order_items.create!(item: @giant, price: 50, quantity: 1, fulfilled: true)
+      order_item_6 = order_3.order_items.create!(item: @hippo, price: 50, quantity: 1, fulfilled: true)
+
+      item_4_discount_price = order_item_4.price *  ((100.0 - discount_1.percent)/100)
+      item_4_discount_subtotal = item_4_discount_price * order_item_4.quantity
+      
+      visit "/profile/orders/#{order_3.id}"
+
+      within "#order-item-#{order_item_4.id}" do
+        expect(page).to have_content(item_4_discount_price)
+        expect(page).to have_content(item_4_discount_subtotal)
+      end
+
+      within "#order-item-#{order_item_5.id}" do
+        expect(page).to have_content(order_item_5.price)
+        expect(page).to have_content(order_item_5.subtotal)
+      end
+
+      within "#order-item-#{order_item_6.id}" do
+        expect(page).to have_content(order_item_6.price)
+        expect(page).to have_content(order_item_6.subtotal)
+      end
+    end
+
     it 'I see a link to cancel an order, only on a pending order show page' do
       visit "/profile/orders/#{@order_1.id}"
 
