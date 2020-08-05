@@ -45,13 +45,13 @@ class Cart
   end
   # need to model spec for these!
   def qualifies_for_discount?(item_id)
-    quantity = count_of(item_id)
-    item = Item.find(item_id)
     discount_info(item, quantity).any?
   end
 
   def discount_percent(item_id)
+
     # return the correct percentage discount for the item based on qualifying quantity
+    # if multiple discounts apply, return the higher percentage
   end
 
   def savings(item_id)
@@ -62,7 +62,9 @@ class Cart
     # calculate discounted subtotal based on original subtotal minus savings
   end
 
-  def discount_info(item, quantity)
+  def discount_info(item_id)
+    quantity = count_of(item_id)
+    item = Item.find(item_id)
     Discount.where('merchant_id = ? and quantity_required <= ?', item.merchant_id, quantity)
   end
 end
