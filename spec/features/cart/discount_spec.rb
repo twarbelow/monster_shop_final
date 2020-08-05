@@ -56,7 +56,22 @@ RSpec.describe "as a regular user" do
     end
   end
 
-  xit "when I add the qualifying quantity of one item that applies to multiple discounts, I see the highest of the discounts applied" do
+  it "when I add the qualifying quantity of one item that applies to multiple discounts, I see the highest of the discounts applied" do
+    visit item_path(@ogre)
+    click_button 'Add to Cart'
+    visit item_path(@ogre)
+    click_button 'Add to Cart'
+    visit item_path(@ogre)
+    click_button 'Add to Cart'
+    visit item_path(@ogre)
+    click_button 'Add to Cart'
 
+    visit "/cart"
+    save_and_open_page
+    within "#item-#{@ogre.id}" do
+      expect(page).to have_content("10% Discount Applied")
+      expect(page).to have_content("Savings: $20.00")
+      expect(page).to have_content("Subtotal: $180.00")
+    end
   end
 end
