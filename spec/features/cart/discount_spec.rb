@@ -40,7 +40,7 @@ RSpec.describe "as a regular user" do
     visit "/cart"
 
     within "#item-#{@ogre.id}" do
-      expect(page).to have_content("#{disount_1.percet}% Discount Applied")
+      expect(page).to have_content("5% Discount Applied")
       expect(page).to have_content("Savings: $5.00")
       expect(page).to have_content("Subtotal: $95.00")
     end
