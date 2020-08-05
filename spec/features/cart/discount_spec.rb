@@ -67,7 +67,7 @@ RSpec.describe "as a regular user" do
     click_button 'Add to Cart'
 
     visit "/cart"
-    save_and_open_page
+    
     within "#item-#{@ogre.id}" do
       expect(page).to have_content("10% Discount Applied")
       expect(page).to have_content("Savings: $20.00")
