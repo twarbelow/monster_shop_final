@@ -45,13 +45,16 @@ class Cart
   end
   # need to model spec for these!
   def qualifies_for_discount?(item_id)
-    discount_info(item, quantity).any?
+    discount_info(item_id).any?
   end
 
   def discount_percent(item_id)
-
-    # return the correct percentage discount for the item based on qualifying quantity
-    # if multiple discounts apply, return the higher percentage
+    discounts = discount_info(item_id)
+    if discounts.count < 1
+      discounts.order(percent: :desc).first.percent
+    else
+      discounts.first.percent
+    end
   end
 
   def savings(item_id)
