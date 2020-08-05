@@ -35,6 +35,28 @@ RSpec.describe 'Create Order' do
         expect(page).to have_link(order.id)
       end
     end
+
+    it 'caluculates order with discount' do
+      discount = @megan.discounts.create!(percent: 5, quantity_required: 2)
+      discount_price = @ogre.price * ((100.0 - discount.percent)/100)
+
+      visit item_path(@ogre)
+      click_button 'Add to Cart'
+      visit item_path(@ogre)
+      click_button 'Add to Cart'
+      visit item_path(@hippo)
+      click_button 'Add to Cart'
+      visit item_path(@hippo)
+      click_button 'Add to Cart'
+
+      visit '/cart'
+
+      click_button 'Check Out'
+
+      order = Order.last
+
+      expect(order.order_items.where('item_id = ?', @ogre.id).first.price).to eq(discount_price)
+    end
   end
 
   describe 'As a Visitor' do
