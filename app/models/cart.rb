@@ -50,7 +50,7 @@ class Cart
 
   def discount_percent(item_id)
     discounts = discount_info(item_id)
-    if discounts.count < 1
+    if discounts.count > 1
       discounts.order(percent: :desc).first.percent
     else
       discounts.first.percent
