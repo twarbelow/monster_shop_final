@@ -58,7 +58,7 @@ class Cart
   end
 
   def savings(item_id)
-    # calculate number amount of savings based on count_of item and the discount it qualified for
+    discount_percent(item_id) * (subtotal_of(item_id)/100.0)
   end
 
   def discounted_subtotal(item_id)
