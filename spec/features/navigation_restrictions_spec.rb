@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Navigation Restrictions' do
   describe 'As a Visitor' do
     it 'I can not visit the user profile' do
-      visit '/profile'
+      user = User.create!(name: 'Regular', address: '123 Regular St', city: 'Regular', state: 'RE', zip: 12355, email: 'regular@example.com', password: 'regularpassword', role: 0)
+
+      visit profile_path(user.id)
     end
 
     it 'I cannot visit the merchant dashboard' do
@@ -164,7 +166,9 @@ RSpec.describe 'Navigation Restrictions' do
     end
 
     it 'I can not visit the user profile' do
-      visit '/profile'
+      user = User.create!(name: 'Regular', address: '123 Regular St', city: 'Regular', state: 'RE', zip: 12355, email: 'regular@example.com', password: 'regularpassword', role: 0)
+
+      visit profile_path(user.id)
     end
 
     it 'I cannot visit the merchant dashboard' do

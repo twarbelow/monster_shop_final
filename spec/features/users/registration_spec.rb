@@ -23,7 +23,7 @@ RSpec.describe 'User Registration' do
       fill_in 'Password confirmation', with: 'securepassword'
       click_button 'Register'
 
-      expect(current_path).to eq(profile_path)
+      expect(current_path).to eq(profile_path(User.last.id))
       expect(page).to have_content('Welcome, Megan!')
     end
 

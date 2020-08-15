@@ -137,7 +137,7 @@ RSpec.describe 'Site Navigation' do
           click_link 'Profile'
         end
 
-        expect(current_path).to eq(profile_path)
+        expect(current_path).to eq(profile_path(@user.id))
       end
     end
 
@@ -229,7 +229,7 @@ RSpec.describe 'Site Navigation' do
           click_link 'Profile'
         end
 
-        expect(current_path).to eq(profile_path)
+        expect(current_path).to eq(profile_path(User.last.id))
       end
 
       it 'my merchant page' do
@@ -320,7 +320,7 @@ RSpec.describe 'Site Navigation' do
           click_link 'Profile'
         end
 
-        expect(current_path).to eq(profile_path)
+        expect(current_path).to eq(profile_path(User.last.id))
       end
 
       it 'my merchant page' do

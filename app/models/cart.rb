@@ -43,7 +43,7 @@ class Cart
   def limit_reached?(item_id)
     count_of(item_id) == Item.find(item_id).inventory
   end
-  
+
   def qualifies_for_discount?(item_id)
     discount_info(item_id).any?
   end
